@@ -15,8 +15,3 @@ This app will help user to follow pomodoro technique by showing which time inter
 - The app will vibrate or play different sound for each time interval. Eg. Play loud sound for `Focus` interval & soft sound for `Rest` interval.
 3. User will be able to set their own time for each interval:
 - User can set how long for each interval. Eg. 25 minutes for `Focus` interval & 5 minutes for `Rest` interval.
-
-## App Pages
-1. Timer Page = shows the timer
-2. About Me Page = shows my profile
-3. Setting Page = shows all timer settings
