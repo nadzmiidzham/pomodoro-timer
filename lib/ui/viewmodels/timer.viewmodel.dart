@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:pomodoro_timer/core/models/timer.model.dart';
+import 'package:pomodoro_timer/core/services/timer.service..dart';
 
 enum TimerMode {
   ACTIVE,
@@ -6,9 +9,15 @@ enum TimerMode {
 }
 
 class TimerViewModel extends ChangeNotifier {
+  TimerService _timerService = GetIt.instance<TimerService>();
   TimerMode mode = TimerMode.INACTIVE;
+  TimerModel timer = TimerModel(focus: 25, rest: 5);
 
-  changeMode() {
+  constructor() async {
+    timer = await _timerService.getTimerSetting() ?? TimerModel(focus: 25, rest: 5);
+  }
+
+  changeMode() async {
     switch(mode) {
       case TimerMode.INACTIVE:
         mode = TimerMode.ACTIVE;
@@ -16,6 +25,14 @@ class TimerViewModel extends ChangeNotifier {
       case TimerMode.ACTIVE:
         mode = TimerMode.INACTIVE;
         break;
+    }
+
+    notifyListeners();
+  }
+
+  saveTimerSetting(int focusDuration, int restDuration) async {
+    if(await _timerService.saveTimerSetting(focusDuration, restDuration)) {
+      timer = await _timerService.getTimerSetting();
     }
 
     notifyListeners();
