@@ -10,9 +10,7 @@ void main() {
   GetIt.I.registerSingleton(TimerService());
 
   runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider(create: (_) => TimerViewModel())
-    ],
+    providers: [ChangeNotifierProvider(create: (_) => TimerViewModel())],
     child: MyApp(),
   ));
 }
@@ -22,10 +20,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Pomodoro Timer',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
       home: HomePage(),
     );
   }
