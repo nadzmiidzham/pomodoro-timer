@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class SetTimerWidget extends StatefulWidget {
-  final double minValue, maxValue;
+  final int focusTime, restTime;
   final Function(int, int) playTimerCallback;
 
   SetTimerWidget({
-    this.minValue,
-    @required this.maxValue,
+    this.focusTime,
+    this.restTime,
     @required this.playTimerCallback
   });
 
@@ -16,16 +16,16 @@ class SetTimerWidget extends StatefulWidget {
 
 class _SetTimerWidgetState extends State<SetTimerWidget> {
   bool _isFocus = true;
-  int _division;
-  int _focusValue = 0, _restValue = 0;
-  double _currentValue = 0;
+  double _currentValue;
+  int _focusValue, _restValue;
 
   @override
   void initState() {
     super.initState();
 
-    _division = (widget.maxValue / 5).round();
-    _currentValue = widget.minValue ?? 0;
+    _currentValue = 5;
+    _focusValue = widget.focusTime ?? 5;
+    _restValue = widget.restTime ?? 5;
   }
 
   @override
@@ -35,11 +35,11 @@ class _SetTimerWidgetState extends State<SetTimerWidget> {
         Text(_isFocus? 'FOCUS' : 'REST'),
 
         Slider(
-          divisions: _division,
+          divisions: 9,
           value: _currentValue,
-          min: 0,
-          max: widget.maxValue,
-          label: _currentValue.round().toString(),
+          min: 5,
+          max: 50,
+          label: '${_currentValue.round().toString()} min',
           onChanged: (double value) {
             setState(() {
               _currentValue = value;
