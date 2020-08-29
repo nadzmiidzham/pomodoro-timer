@@ -16,9 +16,6 @@ class TimerViewModel extends ChangeNotifier {
   int get focusTime { return timer.focus; }
   int get restTime { return timer.rest; }
 
-  // setter
-  set isFocus(bool isFocus) { this.isFocus = isFocus; }
-
   // action methods
   changeMode() async {
     isActive = !isActive;
@@ -29,7 +26,6 @@ class TimerViewModel extends ChangeNotifier {
     if(await _timerService.saveTimerSetting(focusDuration, restDuration)) {
       timer = await _timerService.getTimerSetting() ?? TimerModel(focus: 25, rest: 5);
     }
-
     notifyListeners();
   }
 }
