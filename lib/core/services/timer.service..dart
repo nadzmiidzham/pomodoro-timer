@@ -5,16 +5,17 @@ import 'package:pomodoro_timer/core/models/timer.model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TimerService {
-  saveTimerSetting(int focusDuration, int restDuration) async {
+  Future<bool> saveTimerSetting(int focusDuration, int restDuration) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-
-    return preferences.setString(TimerConstant.TIMER_SETTING_NAME, jsonEncode(TimerModel(focus: focusDuration, rest: restDuration)));
+    return preferences.setString(TimerConstant.TIMER_SETTING_NAME, jsonEncode(
+        TimerModel(focus: focusDuration, rest: restDuration))
+    );
   }
 
-  getTimerSetting() async {
+  Future<TimerModel> getTimerSetting() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String tempJson = preferences.getString(TimerConstant.TIMER_SETTING_NAME);
 
-    return TimerModel.fromJson(jsonDecode(tempJson));
+    return (tempJson != null)? TimerModel.fromJson(jsonDecode(tempJson)) : null;
   }
 }

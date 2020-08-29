@@ -18,7 +18,6 @@ class TimerViewModel extends ChangeNotifier {
   }
 
   // getter
-  bool get isFocus { return true; }
   int get focusTime { return timer.focus; }
   int get restTime { return timer.rest; }
 
@@ -36,11 +35,6 @@ class TimerViewModel extends ChangeNotifier {
         break;
     }
 
-    notifyListeners();
-  }
-
-  changeInterval() {
-    isFocus = !isFocus;
     notifyListeners();
   }
 
