@@ -27,7 +27,7 @@ class TimerViewModel extends ChangeNotifier {
 
   saveTimerSetting(int focusDuration, int restDuration) async {
     if(await _timerService.saveTimerSetting(focusDuration, restDuration)) {
-      timer = await _timerService.getTimerSetting();
+      timer = await _timerService.getTimerSetting() ?? TimerModel(focus: 25, rest: 5);
     }
 
     notifyListeners();
