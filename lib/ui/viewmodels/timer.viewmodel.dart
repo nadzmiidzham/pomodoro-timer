@@ -3,14 +3,9 @@ import 'package:get_it/get_it.dart';
 import 'package:pomodoro_timer/core/models/timer.model.dart';
 import 'package:pomodoro_timer/core/services/timer.service..dart';
 
-enum TimerMode {
-  ACTIVE,
-  INACTIVE
-}
-
 class TimerViewModel extends ChangeNotifier {
   TimerService _timerService = GetIt.instance<TimerService>();
-  TimerMode mode = TimerMode.INACTIVE;
+  bool isActive = true;
   TimerModel timer = TimerModel(focus: 25, rest: 5);
 
   constructor() async {
@@ -26,15 +21,7 @@ class TimerViewModel extends ChangeNotifier {
 
   // action methods
   changeMode() async {
-    switch(mode) {
-      case TimerMode.INACTIVE:
-        mode = TimerMode.ACTIVE;
-        break;
-      case TimerMode.ACTIVE:
-        mode = TimerMode.INACTIVE;
-        break;
-    }
-
+    isActive = !isActive;
     notifyListeners();
   }
 
