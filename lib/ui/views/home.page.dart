@@ -18,7 +18,6 @@ class HomePage extends StatelessWidget {
               restTime: provider.restTime,
               playTimerCallback: (focusValue, restValue) {
                 provider.saveTimerSetting(focusValue, restValue);
-                print('Focus Value: $focusValue, Rest Value: $restValue');
               },
             );
           },

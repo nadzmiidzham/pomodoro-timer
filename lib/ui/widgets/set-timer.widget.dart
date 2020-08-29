@@ -23,9 +23,9 @@ class _SetTimerWidgetState extends State<SetTimerWidget> {
   void initState() {
     super.initState();
 
-    _currentValue = 5;
     _focusValue = widget.focusTime ?? 5;
     _restValue = widget.restTime ?? 5;
+    _currentValue = _isFocus? _focusValue.toDouble() : _restValue.toDouble();
   }
 
   @override
