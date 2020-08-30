@@ -8,6 +8,6 @@ void setupLocator() {
   // service
   locator.registerLazySingleton(() => TimerService());
 
-  // viewmodels
+  // view models
   locator.registerLazySingleton(() => TimerViewModel());
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class SetTimerWidget extends StatefulWidget {
   final int focusTime, restTime;
-  final Function(int, int) playTimerCallback;
+  final Function(int focusValue, int restValue) playTimerCallback;
 
   SetTimerWidget({
     this.focusTime,
