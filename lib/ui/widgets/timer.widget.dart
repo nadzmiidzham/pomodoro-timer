@@ -47,7 +47,7 @@ class _TimerWidgetState extends State<TimerWidget> with TickerProviderStateMixin
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 _timerTitle(widget.title),
-                _timerCountDown(widget.timerDuration)
+                _timerCountDown()
               ],
             ),
           ),
@@ -69,17 +69,17 @@ class _TimerWidgetState extends State<TimerWidget> with TickerProviderStateMixin
     );
   }
 
-  Widget _timerCountDown(Duration duration) {
-    Duration duration = controller.duration * controller.value;
-
+  Widget _timerCountDown() {
     return AnimatedBuilder(
       animation: controller,
       builder: (context, child) {
+        Duration duration = controller.duration * controller.value;
+
         return Text(
           '${duration.inMinutes.toString().padLeft(2, '0')}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}',
           style: TextStyle(
             fontSize: 110,
-            color: Colors.black
+            color: Colors.black,
           ),
         );
       },
