@@ -21,21 +21,34 @@ class HomePage extends StatelessWidget {
           child: viewModel.state == ViewState.BUSY
             ? CircularProgressIndicator()
             : viewModel.isActive
-              ? TimerWidget(
-                  title: viewModel.isFocus? TimerConstant.TIMER_TITLE_FOCUS : TimerConstant.TIMER_TITLE_REST,
-                  timerDuration: Duration(minutes: viewModel.isFocus? viewModel.focusTime : viewModel.restTime),
-                  timerFinishedCallback: () {
-                    print('Timer Finished');
-                  },
+              // Timer Widget
+              ? Container(
+                  padding: const EdgeInsets.all(20),
+                  child: Center(
+                    child: TimerWidget(
+                      title: viewModel.isFocus? TimerConstant.TIMER_TITLE_FOCUS : TimerConstant.TIMER_TITLE_REST,
+                      timerDuration: Duration(minutes: viewModel.isFocus? viewModel.focusTime : viewModel.restTime),
+                      timerFinishedCallback: () {
+                        print('Timer Finished');
+                      },
+                    ),
+                  ),
                 )
-              : SetTimerWidget(
-                focusTime: viewModel.focusTime,
-                restTime: viewModel.restTime,
-                playTimerCallback: (focusValue, restValue) async {
-                  viewModel.saveTimerSetting(focusValue, restValue);
-                  viewModel.changeMode();
-                },
-              ),
+
+              // Set Timer Widget
+              : Container(
+                  padding: const EdgeInsets.all(10),
+                  child: Center(
+                    child: SetTimerWidget(
+                      focusTime: viewModel.focusTime,
+                      restTime: viewModel.restTime,
+                      playTimerCallback: (focusValue, restValue) async {
+                        viewModel.saveTimerSetting(focusValue, restValue);
+                        viewModel.changeMode();
+                      },
+                    ),
+                  ),
+                ),
         ),
       ),
     );

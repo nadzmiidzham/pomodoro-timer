@@ -44,6 +44,7 @@ class _TimerWidgetState extends State<TimerWidget> with TickerProviderStateMixin
           Align(
             alignment: FractionalOffset.center,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 _timerTitle(widget.title),
                 _timerCountDown(widget.timerDuration)
@@ -63,8 +64,8 @@ class _TimerWidgetState extends State<TimerWidget> with TickerProviderStateMixin
 
   Widget _timerTitle(String title) {
     return Text(
-        title,
-        style: TextStyle(fontSize: 20, color: Colors.black)
+      title,
+      style: TextStyle(fontSize: 20, color: Colors.black)
     );
   }
 
@@ -76,7 +77,10 @@ class _TimerWidgetState extends State<TimerWidget> with TickerProviderStateMixin
       builder: (context, child) {
         return Text(
           '${duration.inMinutes.toString().padLeft(2, '0')}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}',
-          style: TextStyle(fontSize: 110, color: Colors.black),
+          style: TextStyle(
+            fontSize: 110,
+            color: Colors.black
+          ),
         );
       },
     );
@@ -88,9 +92,9 @@ class _TimerWidgetState extends State<TimerWidget> with TickerProviderStateMixin
       builder: (context, child) {
         return CustomPaint(
           painter: TimerPainter(
-              animation: controller,
-              backgroundColor: Colors.black,
-              color: Colors.green
+            animation: controller,
+            backgroundColor: Colors.black,
+            color: Colors.green
           ),
         );
       },
@@ -104,11 +108,7 @@ class _TimerWidgetState extends State<TimerWidget> with TickerProviderStateMixin
         return FloatingActionButton(
           child: Icon((controller.isAnimating)? Icons.pause : Icons.play_arrow),
           onPressed: () {
-            if (controller.isAnimating) {
-              controller.stop();
-            } else {
-              controller.reverse(from: (controller.value == 0)? 1 : controller.value);
-            }
+            controller.reverse(from: (controller.value == 0)? 1 : controller.value);
           },
         );
       },
