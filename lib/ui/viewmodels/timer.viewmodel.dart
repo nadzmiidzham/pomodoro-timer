@@ -20,7 +20,7 @@ class TimerViewModel extends BaseViewModel {
   }
 
   // action methods
-  changeMode() async {
+  changeMode() {
     setState(ViewState.BUSY);
     isActive = !isActive;
     setState(ViewState.IDLE);
