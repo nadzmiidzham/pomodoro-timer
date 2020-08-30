@@ -1,6 +1,6 @@
 import 'package:pomodoro_timer/core/models/timer.model.dart';
 import 'package:pomodoro_timer/core/services/timer.service..dart';
-import 'file:///C:/Users/seladanghijau/Desktop/projects/pomodoro_timer/lib/locator.dart';
+import 'package:pomodoro_timer/locator.dart';
 import 'package:pomodoro_timer/ui/viewmodels/base.viewmodel.dart';
 
 class TimerViewModel extends BaseViewModel {
