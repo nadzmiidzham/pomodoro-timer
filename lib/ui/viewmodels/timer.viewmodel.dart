@@ -1,31 +1,36 @@
-import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:pomodoro_timer/core/models/timer.model.dart';
 import 'package:pomodoro_timer/core/services/timer.service..dart';
+import 'file:///C:/Users/seladanghijau/Desktop/projects/pomodoro_timer/lib/locator.dart';
+import 'package:pomodoro_timer/ui/viewmodels/base.viewmodel.dart';
 
-class TimerViewModel extends ChangeNotifier {
-  TimerService _timerService = GetIt.instance<TimerService>();
+class TimerViewModel extends BaseViewModel {
+  TimerService _timerService = locator<TimerService>();
   bool isActive = false;
   TimerModel timer = TimerModel(focus: 25, rest: 5);
-
-  constructor() async {
-    timer = await _timerService.getTimerSetting() ?? TimerModel(focus: 25, rest: 5);
-  }
 
   // getter
   int get focusTime { return timer.focus; }
   int get restTime { return timer.rest; }
 
+  // init
+  initTimeSetting() async {
+    setState(ViewState.IDLE);
+    timer = await _timerService.getTimerSetting() ?? TimerModel(focus: 25, rest: 5);
+    setState(ViewState.BUSY);
+  }
+
   // action methods
   changeMode() async {
+    setState(ViewState.IDLE);
     isActive = !isActive;
-    notifyListeners();
+    setState(ViewState.BUSY);
   }
 
   saveTimerSetting(int focusDuration, int restDuration) async {
+    setState(ViewState.IDLE);
     if(await _timerService.saveTimerSetting(focusDuration, restDuration)) {
       timer = await _timerService.getTimerSetting() ?? TimerModel(focus: 25, rest: 5);
     }
-    notifyListeners();
+    setState(ViewState.BUSY);
   }
 }
