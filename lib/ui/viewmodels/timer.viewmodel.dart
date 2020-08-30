@@ -5,7 +5,7 @@ import 'package:pomodoro_timer/core/services/timer.service..dart';
 
 class TimerViewModel extends ChangeNotifier {
   TimerService _timerService = GetIt.instance<TimerService>();
-  bool isActive = true;
+  bool isActive = false;
   TimerModel timer = TimerModel(focus: 25, rest: 5);
 
   constructor() async {

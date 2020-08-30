@@ -13,13 +13,18 @@ class HomePage extends StatelessWidget {
       body: Container(
         child: Consumer<TimerViewModel>(
           builder: (context, provider, child) {
-            return SetTimerWidget(
-              focusTime: provider.focusTime,
-              restTime: provider.restTime,
-              playTimerCallback: (focusValue, restValue) {
-                provider.saveTimerSetting(focusValue, restValue);
-              },
-            );
+            if(!provider.isActive) {
+              return SetTimerWidget(
+                focusTime: provider.focusTime,
+                restTime: provider.restTime,
+                playTimerCallback: (focusValue, restValue) {
+                  provider.saveTimerSetting(focusValue, restValue);
+                  provider.changeMode();
+                },
+              );
+            }
+
+            return SizedBox.shrink();
           },
         ),
       ),
