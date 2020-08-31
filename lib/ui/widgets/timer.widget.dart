@@ -113,8 +113,16 @@ class _TimerWidgetState extends State<TimerWidget> with TickerProviderStateMixin
       animation: controller,
       builder: (context, child) {
         return FloatingActionButton(
-          child: Icon((controller.isAnimating)? Icons.pause : Icons.play_arrow),
-          onPressed: () {},
+          child: Icon(controller.isAnimating? Icons.pause : Icons.play_arrow),
+          onPressed: () {
+            if(controller.isAnimating) {
+              controller.stop();
+            } else {
+              controller.reverse(from: (controller.value == 0)? 1 : controller.value);
+            }
+
+            setState(() {});
+          },
         );
       },
     );
