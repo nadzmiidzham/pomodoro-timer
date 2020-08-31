@@ -132,7 +132,10 @@ class _TimerWidgetState extends State<TimerWidget> with TickerProviderStateMixin
               // stop button
               FloatingActionButton(
                 child: Icon(Icons.stop),
-                onPressed: () {},
+                onPressed: () {
+                  widget.timerFinishedCallback();
+                  setState(() {});
+                },
               )
             ],
           );
