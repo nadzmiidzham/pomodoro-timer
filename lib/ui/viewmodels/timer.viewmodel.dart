@@ -24,6 +24,13 @@ class TimerViewModel extends BaseViewModel {
   changeMode() {
     setState(ViewState.BUSY);
     isActive = !isActive;
+    isFocus = true;
+    setState(ViewState.IDLE);
+  }
+
+  changeTimeInterval() {
+    setState(ViewState.BUSY);
+    isFocus = !isFocus;
     setState(ViewState.IDLE);
   }
 

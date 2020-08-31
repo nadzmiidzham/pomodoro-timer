@@ -3,14 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 class TimerWidget extends StatefulWidget {
+  final Color timerColor;
   final String title;
   final Duration timerDuration;
-  final VoidCallback timerFinishedCallback;
+  final VoidCallback timerFinishedCallback, stopTimerCallback;
 
   TimerWidget({
+    @required this.timerColor,
     @required this.title,
     @required this.timerDuration,
-    this.timerFinishedCallback
+    this.timerFinishedCallback,
+    this.stopTimerCallback,
   });
 
   @override
@@ -105,7 +108,7 @@ class _TimerWidgetState extends State<TimerWidget> with TickerProviderStateMixin
           painter: TimerPainter(
             animation: controller,
             backgroundColor: Colors.black,
-            color: Colors.green
+            color: widget.timerColor
           ),
         );
       },
@@ -133,7 +136,7 @@ class _TimerWidgetState extends State<TimerWidget> with TickerProviderStateMixin
               FloatingActionButton(
                 child: Icon(Icons.stop),
                 onPressed: () {
-                  widget.timerFinishedCallback();
+                  widget.stopTimerCallback();
                   setState(() {});
                 },
               )
