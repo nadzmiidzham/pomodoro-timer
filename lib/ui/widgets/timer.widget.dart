@@ -22,8 +22,8 @@ class _TimerWidgetState extends State<TimerWidget> with TickerProviderStateMixin
   @override
   void initState() {
     controller = AnimationController(vsync: this, duration: widget.timerDuration)
-      ..addStatusListener((status) {
-        if(status == AnimationStatus.completed) {
+      ..addListener(() {
+        if(controller.value <= 0) {
           widget.timerFinishedCallback();
         }
       });

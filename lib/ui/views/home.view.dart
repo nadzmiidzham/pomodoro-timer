@@ -29,7 +29,7 @@ class HomePage extends StatelessWidget {
                       title: viewModel.isFocus? TimerConstant.TIMER_TITLE_FOCUS : TimerConstant.TIMER_TITLE_REST,
                       timerDuration: Duration(minutes: viewModel.isFocus? viewModel.focusTime : viewModel.restTime),
                       timerFinishedCallback: () {
-                        print('Timer Finished');
+                        viewModel.changeMode();
                       },
                     ),
                   ),
