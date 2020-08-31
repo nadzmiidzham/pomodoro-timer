@@ -28,8 +28,8 @@ class HomePage extends StatelessWidget {
                     child: TimerWidget(
                       title: viewModel.isFocus? TimerConstant.TIMER_TITLE_FOCUS : TimerConstant.TIMER_TITLE_REST,
                       timerDuration: Duration(minutes: viewModel.isFocus? viewModel.focusTime : viewModel.restTime),
-                      timerFinishedCallback: () {
-                        viewModel.changeMode();
+                      timerFinishedCallback: () async {
+                        await viewModel.changeMode();
                       },
                     ),
                   ),
@@ -43,8 +43,8 @@ class HomePage extends StatelessWidget {
                       focusTime: viewModel.focusTime,
                       restTime: viewModel.restTime,
                       playTimerCallback: (focusValue, restValue) async {
-                        viewModel.saveTimerSetting(focusValue, restValue);
-                        viewModel.changeMode();
+                        await viewModel.saveTimerSetting(focusValue, restValue);
+                        await viewModel.changeMode();
                       },
                     ),
                   ),
