@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 class TimerWidget extends StatefulWidget {
   final String title;
@@ -62,7 +63,10 @@ class _TimerWidgetState extends State<TimerWidget> with TickerProviderStateMixin
           // timer action button
           Align(
             alignment: FractionalOffset.bottomCenter,
-            child: _actionButton(),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 100),
+              child: _actionButton(),
+            ),
           ),
         ],
       ),
@@ -112,9 +116,38 @@ class _TimerWidgetState extends State<TimerWidget> with TickerProviderStateMixin
     return AnimatedBuilder(
       animation: controller,
       builder: (context, child) {
+        if(!controller.isAnimating) {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              // play button
+              FloatingActionButton(
+                child: Icon(Icons.play_arrow),
+                onPressed: () {
+                  controller.reverse(from: (controller.value == 0)? 1 : controller.value);
+                  setState(() {});
+                },
+              ),
+
+              // stop button
+              FloatingActionButton(
+                child: Icon(Icons.stop),
+                onPressed: () {
+                  widget.timerFinishedCallback();
+                  setState(() {});
+                },
+              )
+            ],
+          );
+        }
+
+        // pause button
         return FloatingActionButton(
-          child: Icon((controller.isAnimating)? Icons.pause : Icons.play_arrow),
-          onPressed: () {},
+          child: Icon(Icons.pause),
+          onPressed: () {
+            controller.stop();
+            setState(() {});
+          },
         );
       },
     );
@@ -133,8 +166,8 @@ class TimerPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    double startAngle = pi * 0.6;
-    double sweepAngle = pi * 1.8;
+    double startAngle = pi * 0.655;
+    double sweepAngle = pi * 1.695;
     double progress = animation.value * sweepAngle;
     Paint backgroundPaint = Paint()
       ..color = backgroundColor
