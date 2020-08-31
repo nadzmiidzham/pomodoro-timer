@@ -28,7 +28,14 @@ class _TimerWidgetState extends State<TimerWidget> with TickerProviderStateMixin
         }
       });
 
+    controller.reverse(from: (controller.value == 0)? 1 : controller.value);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -107,9 +114,7 @@ class _TimerWidgetState extends State<TimerWidget> with TickerProviderStateMixin
       builder: (context, child) {
         return FloatingActionButton(
           child: Icon((controller.isAnimating)? Icons.pause : Icons.play_arrow),
-          onPressed: () {
-            controller.reverse(from: (controller.value == 0)? 1 : controller.value);
-          },
+          onPressed: () {},
         );
       },
     );
@@ -130,7 +135,7 @@ class TimerPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     double startAngle = pi * 0.6;
     double sweepAngle = pi * 1.8;
-    double progress = (1 - animation.value) * sweepAngle;
+    double progress = animation.value * sweepAngle;
     Paint backgroundPaint = Paint()
       ..color = backgroundColor
       ..strokeWidth = 5
