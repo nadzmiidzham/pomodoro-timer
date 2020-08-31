@@ -1,12 +1,13 @@
 import 'package:pomodoro_timer/core/models/timer.model.dart';
 import 'package:pomodoro_timer/core/services/timer.service..dart';
-import 'file:///C:/Users/seladanghijau/Desktop/projects/pomodoro_timer/lib/locator.dart';
+import 'package:pomodoro_timer/locator.dart';
 import 'package:pomodoro_timer/ui/viewmodels/base.viewmodel.dart';
 
 class TimerViewModel extends BaseViewModel {
   TimerService _timerService = locator<TimerService>();
-  bool isActive = false;
   TimerModel timer = TimerModel(focus: 25, rest: 5);
+  bool isActive = false;
+  bool isFocus = true;
 
   // getter
   int get focusTime { return timer.focus; }

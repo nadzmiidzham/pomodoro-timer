@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pomodoro_timer/core/constants/timer.constant.dart';
 
 class SetTimerWidget extends StatefulWidget {
   final int focusTime, restTime;
@@ -32,7 +33,7 @@ class _SetTimerWidgetState extends State<SetTimerWidget> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(_isFocus? 'FOCUS' : 'REST'),
+        Text(_isFocus? TimerConstant.TIMER_TITLE_FOCUS : TimerConstant.TIMER_TITLE_REST),
 
         Slider(
           divisions: 9,
