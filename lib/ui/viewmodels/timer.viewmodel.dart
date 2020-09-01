@@ -7,7 +7,6 @@ class TimerViewModel extends BaseViewModel {
   TimerService _timerService = locator<TimerService>();
   TimerModel timer = TimerModel(focus: 25, rest: 5);
   bool isActive = false;
-  bool isFocus = true;
 
   // getter
   int get focusTime { return timer.focus; }
