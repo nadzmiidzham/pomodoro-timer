@@ -155,7 +155,7 @@ class _TimerWidgetState extends State<TimerWidget> with TickerProviderStateMixin
   }
 
   void _playTimer() {
-    setState(() => controller.reverse(from: (controller.value == 0)? 1 : controller.value));
+    controller.reverse(from: (controller.value == 0)? 1 : controller.value);
   }
 
   void _pauseTimer() {
@@ -163,15 +163,16 @@ class _TimerWidgetState extends State<TimerWidget> with TickerProviderStateMixin
   }
 
   void _stopTimer() {
-    setState(() => widget.stopTimerCallback());
+    widget.stopTimerCallback();
   }
 
   void _changeTimeInterval() {
     setState(() {
       isFocus = !isFocus;
       controller.duration = isFocus? widget.focusDuration : widget.restDuration;
-      _playTimer();
     });
+
+    _playTimer();
   }
 }
 
