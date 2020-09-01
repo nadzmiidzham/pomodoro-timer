@@ -26,12 +26,10 @@ class HomePage extends StatelessWidget {
                   padding: const EdgeInsets.all(20),
                   child: Center(
                     child: TimerWidget(
-                      timerColor: viewModel.isFocus? Colors.green : Colors.amber,
-                      title: viewModel.isFocus? TimerConstant.TIMER_TITLE_FOCUS : TimerConstant.TIMER_TITLE_REST,
-                      timerDuration: Duration(minutes: viewModel.isFocus? viewModel.focusTime : viewModel.restTime),
-                      timerFinishedCallback: () async {
-                        await viewModel.changeTimeInterval();
-                      },
+                      focusDuration: Duration(minutes: viewModel.focusTime),
+                      restDuration: Duration(minutes: viewModel.restTime),
+                      focusColor: Colors.green,
+                      restColor: Colors.amber,
                       stopTimerCallback: () async {
                         await viewModel.changeMode();
                       },

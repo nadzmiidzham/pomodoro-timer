@@ -7,7 +7,6 @@ class TimerViewModel extends BaseViewModel {
   TimerService _timerService = locator<TimerService>();
   TimerModel timer = TimerModel(focus: 25, rest: 5);
   bool isActive = false;
-  bool isFocus = true;
 
   // getter
   int get focusTime { return timer.focus; }
@@ -24,13 +23,6 @@ class TimerViewModel extends BaseViewModel {
   changeMode() {
     setState(ViewState.BUSY);
     isActive = !isActive;
-    isFocus = true;
-    setState(ViewState.IDLE);
-  }
-
-  changeTimeInterval() {
-    setState(ViewState.BUSY);
-    isFocus = !isFocus;
     setState(ViewState.IDLE);
   }
 
