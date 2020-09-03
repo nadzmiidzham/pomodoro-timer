@@ -1,15 +1,19 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:pomodoro_timer/core/constants/timer.constant.dart';
 
 class TimerWidget extends StatefulWidget {
-  final String title;
-  final Duration timerDuration;
-  final VoidCallback timerFinishedCallback;
+  final Duration focusDuration, restDuration;
+  final Color focusColor, restColor;
+  final VoidCallback stopTimerCallback;
 
   TimerWidget({
-    @required this.title,
-    @required this.timerDuration,
-    this.timerFinishedCallback
+    @required this.focusDuration,
+    @required this.restDuration,
+    @required this.focusColor,
+    @required this.restColor,
+    this.stopTimerCallback,
   });
 
   @override
@@ -18,17 +22,18 @@ class TimerWidget extends StatefulWidget {
 
 class _TimerWidgetState extends State<TimerWidget> with TickerProviderStateMixin {
   AnimationController controller;
+  bool isFocus = true;
 
   @override
   void initState() {
-    controller = AnimationController(vsync: this, duration: widget.timerDuration)
+    controller = AnimationController(vsync: this, duration: isFocus? widget.focusDuration : widget.restDuration)
       ..addListener(() {
         if(controller.value <= 0) {
-          widget.timerFinishedCallback();
+          _changeTimeInterval();
         }
       });
 
-    controller.reverse(from: (controller.value == 0)? 1 : controller.value);
+    _playTimer();
     super.initState();
   }
 
@@ -45,7 +50,7 @@ class _TimerWidgetState extends State<TimerWidget> with TickerProviderStateMixin
       child: Stack(
         children: [
           // timer arc
-          Positioned.fill(child: _timerArc()),
+          Positioned.fill(child: _timerArcWidget()),
 
           // timer countdown
           Align(
@@ -53,8 +58,8 @@ class _TimerWidgetState extends State<TimerWidget> with TickerProviderStateMixin
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                _timerTitle(widget.title),
-                _timerCountDown()
+                _timerTitleWidget(isFocus? TimerConstant.TIMER_TITLE_FOCUS : TimerConstant.TIMER_TITLE_REST),
+                _timerCountDownWidget()
               ],
             ),
           ),
@@ -62,21 +67,24 @@ class _TimerWidgetState extends State<TimerWidget> with TickerProviderStateMixin
           // timer action button
           Align(
             alignment: FractionalOffset.bottomCenter,
-            child: _actionButton(),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 100),
+              child: _actionButtonWidget(),
+            ),
           ),
         ],
       ),
     );
   }
 
-  Widget _timerTitle(String title) {
+  Widget _timerTitleWidget(String title) {
     return Text(
       title,
       style: TextStyle(fontSize: 20, color: Colors.black)
     );
   }
 
-  Widget _timerCountDown() {
+  Widget _timerCountDownWidget() {
     return AnimatedBuilder(
       animation: controller,
       builder: (context, child) {
@@ -93,7 +101,7 @@ class _TimerWidgetState extends State<TimerWidget> with TickerProviderStateMixin
     );
   }
 
-  Widget _timerArc() {
+  Widget _timerArcWidget() {
     return AnimatedBuilder(
       animation: controller,
       builder: (context, child) {
@@ -101,23 +109,70 @@ class _TimerWidgetState extends State<TimerWidget> with TickerProviderStateMixin
           painter: TimerPainter(
             animation: controller,
             backgroundColor: Colors.black,
-            color: Colors.green
+            color: isFocus? widget.focusColor : widget.restColor
           ),
         );
       },
     );
   }
 
-  Widget _actionButton() {
+  Widget _actionButtonWidget() {
     return AnimatedBuilder(
       animation: controller,
       builder: (context, child) {
+        if(!controller.isAnimating) {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              // play button
+              FloatingActionButton(
+                child: Icon(Icons.play_arrow),
+                onPressed: () {
+                  _playTimer();
+                },
+              ),
+
+              // stop button
+              FloatingActionButton(
+                child: Icon(Icons.stop),
+                onPressed: () {
+                  _stopTimer();
+                },
+              )
+            ],
+          );
+        }
+
+        // pause button
         return FloatingActionButton(
-          child: Icon((controller.isAnimating)? Icons.pause : Icons.play_arrow),
-          onPressed: () {},
+          child: Icon(Icons.pause),
+          onPressed: () {
+            _pauseTimer();
+          },
         );
       },
     );
+  }
+
+  void _playTimer() {
+    controller.reverse(from: (controller.value == 0)? 1 : controller.value);
+  }
+
+  void _pauseTimer() {
+    setState(() => controller.stop());
+  }
+
+  void _stopTimer() {
+    widget.stopTimerCallback();
+  }
+
+  void _changeTimeInterval() {
+    setState(() {
+      isFocus = !isFocus;
+      controller.duration = isFocus? widget.focusDuration : widget.restDuration;
+    });
+
+    _playTimer();
   }
 }
 
