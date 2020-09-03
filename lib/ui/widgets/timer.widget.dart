@@ -188,8 +188,8 @@ class TimerPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    double startAngle = pi * 0.655;
-    double sweepAngle = pi * 1.695;
+    double startAngle = pi * 0.6;
+    double sweepAngle = pi * 1.8;
     double progress = animation.value * sweepAngle;
     Paint backgroundPaint = Paint()
       ..color = backgroundColor
