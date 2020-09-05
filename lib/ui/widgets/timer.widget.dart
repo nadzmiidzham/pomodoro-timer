@@ -127,6 +127,7 @@ class _TimerWidgetState extends State<TimerWidget>
             children: [
               // play button
               FloatingActionButton(
+                heroTag: null,
                 child: Icon(Icons.play_arrow),
                 onPressed: () {
                   _playTimer();
@@ -135,6 +136,7 @@ class _TimerWidgetState extends State<TimerWidget>
 
               // stop button
               FloatingActionButton(
+                heroTag: null,
                 child: Icon(Icons.stop),
                 onPressed: () {
                   _stopTimer();
