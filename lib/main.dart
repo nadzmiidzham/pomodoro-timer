@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pomodoro_timer/locator.dart';
+import 'package:pomodoro_timer/ui/views/about.view.dart';
 import 'package:pomodoro_timer/ui/views/home.view.dart';
 
 void main() {
@@ -13,7 +14,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Pomodoro Timer',
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => HomeView(),
+        '/about': (context) => AboutView(),
+      },
     );
   }
 }
