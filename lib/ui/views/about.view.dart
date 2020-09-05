@@ -34,7 +34,11 @@ class AboutView extends StatelessWidget {
   }
 
   Widget _profilePicture(String url) {
-    return Image.network(url);
+    return Image.network(
+      url,
+      loadingBuilder: (context, child, loadingProgress) =>
+          loadingProgress == null ? child : CircularProgressIndicator(),
+    );
   }
 
   Widget _name(String name) {
