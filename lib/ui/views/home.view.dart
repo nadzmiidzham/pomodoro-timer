@@ -5,7 +5,7 @@ import 'package:pomodoro_timer/ui/views/base.view.dart';
 import 'package:pomodoro_timer/ui/widgets/set-timer.widget.dart';
 import 'package:pomodoro_timer/ui/widgets/timer.widget.dart';
 
-class HomePage extends StatelessWidget {
+class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseView<TimerViewModel>(
