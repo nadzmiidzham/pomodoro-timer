@@ -9,13 +9,19 @@ class TimerViewModel extends BaseViewModel {
   bool isActive = false;
 
   // getter
-  int get focusTime { return timer.focus; }
-  int get restTime { return timer.rest; }
+  int get focusTime {
+    return timer.focus;
+  }
+
+  int get restTime {
+    return timer.rest;
+  }
 
   // init
   initTimeSetting() async {
     setState(ViewState.BUSY);
-    timer = await _timerService.getTimerSetting() ?? TimerModel(focus: 25, rest: 5);
+    timer =
+        await _timerService.getTimerSetting() ?? TimerModel(focus: 25, rest: 5);
     setState(ViewState.IDLE);
   }
 
@@ -28,8 +34,9 @@ class TimerViewModel extends BaseViewModel {
 
   saveTimerSetting(int focusDuration, int restDuration) async {
     setState(ViewState.BUSY);
-    if(await _timerService.saveTimerSetting(focusDuration, restDuration)) {
-      timer = await _timerService.getTimerSetting() ?? TimerModel(focus: 25, rest: 5);
+    if (await _timerService.saveTimerSetting(focusDuration, restDuration)) {
+      timer = await _timerService.getTimerSetting() ??
+          TimerModel(focus: 25, rest: 5);
     }
     setState(ViewState.IDLE);
   }

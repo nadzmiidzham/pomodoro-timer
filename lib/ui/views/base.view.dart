@@ -4,13 +4,11 @@ import 'package:pomodoro_timer/ui/viewmodels/base.viewmodel.dart';
 import 'package:provider/provider.dart';
 
 class BaseView<T extends BaseViewModel> extends StatefulWidget {
-  final Widget Function(BuildContext context, T viewModel, Widget child) builder;
+  final Widget Function(BuildContext context, T viewModel, Widget child)
+      builder;
   final Function(T) onInit;
 
-  BaseView({
-    this.builder,
-    this.onInit
-  });
+  BaseView({this.builder, this.onInit});
 
   @override
   State<StatefulWidget> createState() => _BaseViewState<T>();

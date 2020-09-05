@@ -20,15 +20,18 @@ class TimerWidget extends StatefulWidget {
   _TimerWidgetState createState() => _TimerWidgetState();
 }
 
-class _TimerWidgetState extends State<TimerWidget> with TickerProviderStateMixin {
+class _TimerWidgetState extends State<TimerWidget>
+    with TickerProviderStateMixin {
   AnimationController controller;
   bool isFocus = true;
 
   @override
   void initState() {
-    controller = AnimationController(vsync: this, duration: isFocus? widget.focusDuration : widget.restDuration)
+    controller = AnimationController(
+        vsync: this,
+        duration: isFocus ? widget.focusDuration : widget.restDuration)
       ..addListener(() {
-        if(controller.value <= 0) {
+        if (controller.value <= 0) {
           _changeTimeInterval();
         }
       });
@@ -58,7 +61,9 @@ class _TimerWidgetState extends State<TimerWidget> with TickerProviderStateMixin
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                _timerTitleWidget(isFocus? TimerConstant.TIMER_TITLE_FOCUS : TimerConstant.TIMER_TITLE_REST),
+                _timerTitleWidget(isFocus
+                    ? TimerConstant.TIMER_TITLE_FOCUS
+                    : TimerConstant.TIMER_TITLE_REST),
                 _timerCountDownWidget()
               ],
             ),
@@ -78,10 +83,7 @@ class _TimerWidgetState extends State<TimerWidget> with TickerProviderStateMixin
   }
 
   Widget _timerTitleWidget(String title) {
-    return Text(
-      title,
-      style: TextStyle(fontSize: 20, color: Colors.black)
-    );
+    return Text(title, style: TextStyle(fontSize: 20, color: Colors.black));
   }
 
   Widget _timerCountDownWidget() {
@@ -107,10 +109,9 @@ class _TimerWidgetState extends State<TimerWidget> with TickerProviderStateMixin
       builder: (context, child) {
         return CustomPaint(
           painter: TimerPainter(
-            animation: controller,
-            backgroundColor: Colors.black,
-            color: isFocus? widget.focusColor : widget.restColor
-          ),
+              animation: controller,
+              backgroundColor: Colors.black,
+              color: isFocus ? widget.focusColor : widget.restColor),
         );
       },
     );
@@ -120,7 +121,7 @@ class _TimerWidgetState extends State<TimerWidget> with TickerProviderStateMixin
     return AnimatedBuilder(
       animation: controller,
       builder: (context, child) {
-        if(!controller.isAnimating) {
+        if (!controller.isAnimating) {
           return Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -155,7 +156,7 @@ class _TimerWidgetState extends State<TimerWidget> with TickerProviderStateMixin
   }
 
   void _playTimer() {
-    controller.reverse(from: (controller.value == 0)? 1 : controller.value);
+    controller.reverse(from: (controller.value == 0) ? 1 : controller.value);
   }
 
   void _pauseTimer() {
@@ -169,7 +170,8 @@ class _TimerWidgetState extends State<TimerWidget> with TickerProviderStateMixin
   void _changeTimeInterval() {
     setState(() {
       isFocus = !isFocus;
-      controller.duration = isFocus? widget.focusDuration : widget.restDuration;
+      controller.duration =
+          isFocus ? widget.focusDuration : widget.restDuration;
     });
 
     _playTimer();
@@ -180,11 +182,11 @@ class TimerPainter extends CustomPainter {
   final Animation<double> animation;
   final Color backgroundColor, color;
 
-  TimerPainter({
-    @required this.animation,
-    @required this.backgroundColor,
-    @required this.color
-  }) : super(repaint: animation);
+  TimerPainter(
+      {@required this.animation,
+      @required this.backgroundColor,
+      @required this.color})
+      : super(repaint: animation);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -202,14 +204,16 @@ class TimerPainter extends CustomPainter {
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.stroke;
 
-    canvas.drawArc(Offset.zero & size, startAngle, sweepAngle, false, backgroundPaint);
-    canvas.drawArc(Offset.zero & size, startAngle, progress, false, foregroundPaint);
+    canvas.drawArc(
+        Offset.zero & size, startAngle, sweepAngle, false, backgroundPaint);
+    canvas.drawArc(
+        Offset.zero & size, startAngle, progress, false, foregroundPaint);
   }
 
   @override
   bool shouldRepaint(TimerPainter old) {
-    return old.animation.value != animation.value
-        || old.backgroundColor != backgroundColor
-        || old.color != color;
+    return old.animation.value != animation.value ||
+        old.backgroundColor != backgroundColor ||
+        old.color != color;
   }
 }
