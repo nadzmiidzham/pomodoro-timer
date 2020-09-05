@@ -1,11 +1,10 @@
 import 'package:pomodoro_timer/core/models/github-profile.model.dart';
-import 'package:pomodoro_timer/core/services/cache.service.dart';
 import 'package:pomodoro_timer/core/services/github-api.service.dart';
 import 'package:pomodoro_timer/locator.dart';
 import 'package:pomodoro_timer/ui/viewmodels/base.viewmodel.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AboutViewModel extends BaseViewModel {
-  CacheService _cacheService = locator<CacheService>();
   GithubApiService _githubApiService = locator<GithubApiService>();
   GithubProfileModel _profile =
       GithubProfileModel(name: '', profileLink: null, profilePictureLink: null);
@@ -31,7 +30,11 @@ class AboutViewModel extends BaseViewModel {
   }
 
   // action methods
-  openWebBrowser(String url) {}
-
-  openEmail(String email) {}
+  openWebBrowser(String url) async {
+    if (await canLaunch(url)) {
+      launch(url);
+    } else {
+      throw 'Cannot launch web browser.';
+    }
+  }
 }

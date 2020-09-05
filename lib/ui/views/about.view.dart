@@ -19,7 +19,12 @@ class AboutView extends StatelessWidget {
               ? CircularProgressIndicator()
               : Column(
                   children: [
-                    _profilePicture(viewModel.profilePictureLink),
+                    InkWell(
+                      child: _profilePicture(viewModel.profilePictureLink),
+                      onTap: () {
+                        viewModel.openWebBrowser(viewModel.profilePictureLink);
+                      },
+                    ),
                     _name(viewModel.name),
                   ],
                 ),
