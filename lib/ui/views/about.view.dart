@@ -22,7 +22,7 @@ class AboutView extends StatelessWidget {
                     InkWell(
                       child: _profilePicture(viewModel.profilePictureLink),
                       onTap: () {
-                        viewModel.openWebBrowser(viewModel.profilePictureLink);
+                        viewModel.openWebBrowser(viewModel.profileLink);
                       },
                     ),
                     _name(viewModel.name),
