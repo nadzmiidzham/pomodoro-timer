@@ -15,6 +15,14 @@ class HomeView extends StatelessWidget {
       builder: (context, viewModel, child) => Scaffold(
         appBar: AppBar(
           title: Text('Pomodoro Timer'),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.people),
+              onPressed: () {
+                Navigator.pushNamed(context, '/about');
+              },
+            )
+          ],
         ),
         body: Container(
           child: viewModel.state == ViewState.BUSY
