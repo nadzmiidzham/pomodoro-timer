@@ -24,17 +24,15 @@ class GithubApiService {
       return null;
     }
 
+    // get github profile data using Github API
     Response response = await get(
         '${GithubApiConstant.API_URL}${GithubApiConstant.USER_ENDPOINT}/${GithubApiConstant.USERNAME}');
-
-    // if failed response, show default data
     if (response.statusCode != 200) {
       return null;
     }
 
     // if request is first time, cache response body
     _cacheService.saveCache(GithubApiConstant.API_CACHE_KEY, response.body);
-
     return GithubProfileModel.fromJson(jsonDecode(response.body));
   }
 }
