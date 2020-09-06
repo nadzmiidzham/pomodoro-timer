@@ -30,6 +30,8 @@ class AboutView extends StatelessWidget {
                     _email(viewModel.email, onTap: () {
                       viewModel.openEmailApp(viewModel.email);
                     }),
+                    _socialMedia(viewModel.socialMediaList,
+                        onTap: (url) => viewModel.openWebBrowser(url)),
                   ],
                 ),
         ),
@@ -58,6 +60,29 @@ class AboutView extends StatelessWidget {
     return InkWell(
       child: Text(email),
       onTap: onTap,
+    );
+  }
+
+  Widget _socialMedia(List<Map<String, dynamic>> socialMediaList,
+      {Function(String url) onTap}) {
+    List<Widget> socialMediaListWidget = [];
+
+    socialMediaList.forEach((element) {
+      socialMediaListWidget.add(
+        InkWell(
+            child: Image.asset(
+              element['iconPath'],
+              width: 50,
+              height: 50,
+            ),
+            onTap: () {
+              onTap(element['profileLink']);
+            }),
+      );
+    });
+
+    return Row(
+      children: socialMediaListWidget,
     );
   }
 }
