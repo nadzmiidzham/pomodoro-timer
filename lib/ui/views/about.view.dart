@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pomodoro_timer/ui/shared/asset.constant.dart';
+import 'package:pomodoro_timer/core/constants/profile.constant.dart';
 import 'package:pomodoro_timer/ui/viewmodels/about.viewmodel.dart';
 import 'package:pomodoro_timer/ui/viewmodels/base.viewmodel.dart';
 import 'package:pomodoro_timer/ui/views/base.view.dart';
@@ -20,17 +20,17 @@ class AboutView extends StatelessWidget {
               ? CircularProgressIndicator()
               : Column(
                   children: [
-                    viewModel.profilePictureLink == null
-                        ? _profilePicture(AssetConstant.PROFILE_IMAGE, true)
-                        : _profilePicture(viewModel.profilePictureLink, false,
+                    viewModel.profilePicturePath == null
+                        ? _profilePicture(ProfileConstant.PROFILE_IMAGE, true)
+                        : _profilePicture(viewModel.profilePicturePath, false,
                             onTap: () {
-                            viewModel.openWebBrowser(viewModel.profileLink);
+                            viewModel.openWebBrowser(viewModel.profileUrl);
                           }),
                     _name(viewModel.name),
                     _email(viewModel.email, onTap: () {
                       viewModel.openEmailApp(viewModel.email);
                     }),
-                    _socialMedia(viewModel.socialMediaList,
+                    _socialMedia(viewModel.socialMediaList ?? [],
                         onTap: (url) => viewModel.openWebBrowser(url)),
                   ],
                 ),

@@ -1,39 +1,35 @@
-import 'package:pomodoro_timer/core/constants/github-api.constant.dart';
-import 'package:pomodoro_timer/core/models/github-profile.model.dart';
-import 'package:pomodoro_timer/core/models/social-media.model.dart';
-import 'package:pomodoro_timer/core/services/github-api.service.dart';
-import 'package:pomodoro_timer/core/services/social-media.service.dart';
+import 'package:pomodoro_timer/core/constants/profile.constant.dart';
+import 'package:pomodoro_timer/core/models/profile.model.dart';
+import 'package:pomodoro_timer/core/services/profile.service.dart';
 import 'package:pomodoro_timer/locator.dart';
 import 'package:pomodoro_timer/ui/viewmodels/base.viewmodel.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AboutViewModel extends BaseViewModel {
-  GithubApiService _githubApiService = locator<GithubApiService>();
-  SocialMediaService _socialMediaService = locator<SocialMediaService>();
-  GithubProfileModel _profile;
-  List<SocialMedia> _socialMediaList;
+  ProfileService _profileService = locator<ProfileService>();
+  ProfileModel _profile;
 
   // getter
-  String get profileLink {
-    return _profile.profileLink ?? GithubApiConstant.GITHUB_PROFILE_URL;
+  String get profileUrl {
+    return _profile.profileUrl ?? ProfileConstant.GITHUB_PROFILE_URL;
   }
 
   String get name {
-    return _profile.name ?? GithubApiConstant.GITHUB_PROFILE_NAME;
+    return _profile.name ?? ProfileConstant.GITHUB_PROFILE_NAME;
   }
 
-  String get profilePictureLink {
-    return _profile.profilePictureLink;
+  String get profilePicturePath {
+    return _profile.imagePath;
   }
 
   String get email {
-    return _profile.email ?? GithubApiConstant.GITHUB_PROFILE_EMAIL;
+    return _profile.email ?? ProfileConstant.GITHUB_PROFILE_EMAIL;
   }
 
   List<Map<String, dynamic>> get socialMediaList {
     List<Map<String, dynamic>> list = [];
 
-    _socialMediaList.forEach((element) {
+    _profile.socialMediaList.forEach((element) {
       list.add(
           {'iconPath': element.iconPath, 'profileLink': element.profileLink});
     });
@@ -44,9 +40,7 @@ class AboutViewModel extends BaseViewModel {
   // init methods
   initProfile() async {
     setState(ViewState.BUSY);
-    _profile =
-        await _githubApiService.getGithubProfile() ?? GithubProfileModel();
-    _socialMediaList = _socialMediaService.getSocialMediaList();
+    _profile = await _profileService.getProfile();
     setState(ViewState.IDLE);
   }
 
