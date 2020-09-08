@@ -5,11 +5,8 @@ class SetTimerWidget extends StatefulWidget {
   final int focusTime, restTime;
   final Function(int focusValue, int restValue) playTimerCallback;
 
-  SetTimerWidget({
-    this.focusTime,
-    this.restTime,
-    @required this.playTimerCallback
-  });
+  SetTimerWidget(
+      {this.focusTime, this.restTime, @required this.playTimerCallback});
 
   @override
   _SetTimerWidgetState createState() => _SetTimerWidgetState();
@@ -26,15 +23,16 @@ class _SetTimerWidgetState extends State<SetTimerWidget> {
 
     _focusValue = widget.focusTime ?? 5;
     _restValue = widget.restTime ?? 5;
-    _currentValue = _isFocus? _focusValue.toDouble() : _restValue.toDouble();
+    _currentValue = _isFocus ? _focusValue.toDouble() : _restValue.toDouble();
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(_isFocus? TimerConstant.TIMER_TITLE_FOCUS : TimerConstant.TIMER_TITLE_REST),
-
+        Text(_isFocus
+            ? TimerConstant.TIMER_TITLE_FOCUS
+            : TimerConstant.TIMER_TITLE_REST),
         Slider(
           divisions: 9,
           value: _currentValue,
@@ -45,7 +43,7 @@ class _SetTimerWidgetState extends State<SetTimerWidget> {
             setState(() {
               _currentValue = value;
 
-              if(_isFocus) {
+              if (_isFocus) {
                 _focusValue = value.round();
               } else {
                 _restValue = value.round();
@@ -53,20 +51,19 @@ class _SetTimerWidgetState extends State<SetTimerWidget> {
             });
           },
         ),
-
         FloatingActionButton(
           child: Icon(Icons.play_arrow),
           onPressed: () {
             widget.playTimerCallback(_focusValue, _restValue);
           },
         ),
-
         RaisedButton(
           child: Text('Change Time Interval'),
           onPressed: () {
             setState(() {
               _isFocus = !_isFocus;
-              _currentValue = _isFocus? _focusValue.toDouble() : _restValue.toDouble();
+              _currentValue =
+                  _isFocus ? _focusValue.toDouble() : _restValue.toDouble();
             });
           },
         )
